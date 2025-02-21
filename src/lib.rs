@@ -110,9 +110,8 @@ pub fn strip_nodes_no_ws(
     }
 }
 
-
 // traverses the tree, finding comments.
-pub fn strip_nodes(node: tree_sitter::Node, source_code: &mut String,comment_types: &Vec<String>) {
+pub fn strip_nodes(node: tree_sitter::Node, source_code: &mut String, comment_types: &Vec<String>) {
     if comment_types.contains(&node.kind().to_string()) {
         let start = node.start_byte();
         let end = node.end_byte();
@@ -121,7 +120,7 @@ pub fn strip_nodes(node: tree_sitter::Node, source_code: &mut String,comment_typ
     }
 
     for child in node.children(&mut node.walk()) {
-        strip_nodes(child, source_code,&comment_types);
+        strip_nodes(child, source_code, &comment_types);
     }
 }
 
@@ -130,4 +129,3 @@ pub fn read_file_to_string<P: AsRef<Path>>(path: P) -> Result<String, anyhow::Er
     let content = fs::read_to_string(path)?;
     Ok(content)
 }
-
